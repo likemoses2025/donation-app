@@ -1,21 +1,19 @@
 import React from 'react';
-import {View, SafeAreaView, Text} from 'react-native';
-
+import {SafeAreaView} from 'react-native';
 import globalStyles from '../../assets/styles/globalStyle';
-import style from './style';
 import Header from '../../components/Header/Header';
-import Button from '../../components/Button/Button';
+import Tab from '../../components/Tab/Tab';
+import Badge from '../../components/Badge/Badge';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
       <Header title={'Azzahri. A.'} type={1} />
-      <Button
-        title={'Donatee'}
-        isDisabled={false}
-        onPress={() => console.log('OnPress Me!!')}
-      />
-      <Button title={'Donatee'} isDisabled={true} />
+
+      <Badge title={'Badge'} isInactive={true} />
+      <FontAwesomeIcon icon={faSearch} />
     </SafeAreaView>
   );
 };
