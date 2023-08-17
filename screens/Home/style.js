@@ -37,8 +37,13 @@ const style = StyleSheet.create({
   },
   highlightedImage: {
     width: '100%',
-    height: 160,
+    height: horizontalScale(160),
   },
+  categoryContainer: {
+    marginHorizontal: horizontalScale(24),
+    marginTop: verticalScale(16),
+  },
+  buttonContainer: {},
 });
 
 export default style;

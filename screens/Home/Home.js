@@ -14,66 +14,14 @@ import style from './style';
 import Header from '../../components/Header/Header';
 import Search from '../../components/Search/Search';
 import {resetToInitialState} from '../../redux/reducers/User';
+import Category from '../../components/Category/Category';
 
 const Home = () => {
   const user = useSelector(state => state.user);
+  const categories = useSelector(state => state.categories);
   const dispatch = useDispatch();
 
-  const categories = [
-    {
-      categoryId: 1,
-      name: 'Highlight',
-    },
-    {
-      categoryId: 2,
-      name: 'Environment',
-    },
-    {
-      categoryId: 3,
-      name: 'Education',
-    },
-    {
-      categoryId: 4,
-      name: 'Clothing and Accessories',
-    },
-    {
-      categoryId: 5,
-      name: 'Household goods',
-    },
-    {
-      categoryId: 6,
-      name: 'Electronics',
-    },
-    {
-      categoryId: 7,
-      name: 'Toys and Games',
-    },
-    {
-      categoryId: 8,
-      name: 'Sports Equipment',
-    },
-    {
-      categoryId: 9,
-      name: 'Books and Media',
-    },
-    {
-      categoryId: 10,
-      name: 'Health and Beauty Products',
-    },
-    {
-      categoryId: 11,
-      name: 'Office supplies',
-    },
-    {
-      categoryId: 12,
-      name: 'Tools and Hardware',
-    },
-    {
-      categoryId: 13,
-      name: 'Art and Craft Supplies',
-    },
-  ];
-
+  console.log(categories);
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -102,6 +50,19 @@ const Home = () => {
             resizeMode={'contain'}
           />
         </Pressable>
+
+        {/* Category */}
+        <View style={style.categoryContainer}>
+          <Header title={'Select Category'} color={'#022150'} />
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={style.buttonContainer}>
+            {categories.map(item => (
+              <Category name={item.name} key={item.id} />
+            ))}
+          </ScrollView>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
