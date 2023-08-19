@@ -38,12 +38,16 @@ const style = StyleSheet.create({
   highlightedImage: {
     width: '100%',
     height: horizontalScale(160),
+    marginTop: verticalScale(6),
   },
   categoryContainer: {
-    marginHorizontal: horizontalScale(24),
-    marginTop: verticalScale(16),
+    marginLeft: horizontalScale(24),
   },
-  buttonContainer: {},
+  tab: {marginRight: horizontalScale(10)},
+  categoryHeader: {
+    marginHorizontal: horizontalScale(24),
+    marginBottom: verticalScale(10),
+  },
 });
 
 export default style;

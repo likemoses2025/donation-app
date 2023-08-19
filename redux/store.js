@@ -13,10 +13,12 @@ import {logger} from 'redux-logger';
 
 import User from './reducers/User';
 import Categories from './reducers/Categories';
+import Donations from './reducers/Donations';
 
 const rootReducer = combineReducers({
   user: User,
   categories: Categories,
+  donations: Donations,
 });
 
 // AsyncStorage Setting
@@ -29,9 +31,9 @@ const persistedReducer = persistReducer(configuration, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware => {
-    return getDefaultMiddleware({serializableCheck: false}).concat(logger);
-  },
+  // middleware: getDefaultMiddleware => {
+  //   return getDefaultMiddleware({serializableCheck: false}).concat(logger);
+  // },
 });
 
 export default store;

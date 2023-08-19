@@ -1,27 +1,53 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  SafeAreaView,
-  View,
-  Text,
-  ScrollView,
+  FlatList,
   Image,
   Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import globalStyles from '../../assets/styles/globalStyle';
-import style from './style';
 import Header from '../../components/Header/Header';
 import Search from '../../components/Search/Search';
-import {resetToInitialState} from '../../redux/reducers/User';
-import Category from '../../components/Category/Category';
+import Tab from '../../components/Tab/Tab';
+import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
+import style from './style';
 
 const Home = () => {
   const user = useSelector(state => state.user);
   const categories = useSelector(state => state.categories);
   const dispatch = useDispatch();
 
-  console.log(categories);
+  const [categoryPage, setCategoryPage] = useState(1);
+  const [categoryList, setCategoryList] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+  const categoryPageSize = 4;
+
+  useEffect(() => {
+    setIsLoadingCategories(true);
+    setCategoryList(
+      pagination(categories.categories, categoryPage, categoryPageSize),
+    );
+    setCategoryPage(prev => prev + 1);
+    setIsLoadingCategories(false);
+  }, []);
+
+  // 1개의 페이지당 4개의 아이템이 나타나도록 한다.
+  const pagination = (items, pageNumber, pageSize) => {
+    const startIndex = (pageNumber - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    if (startIndex >= items.length) {
+      return [];
+    }
+    return items.slice(startIndex, endIndex);
+  };
+
+  console.log('Category Length : ', categoryList.length);
+
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -51,17 +77,49 @@ const Home = () => {
           />
         </Pressable>
 
+        <View style={style.categoryHeader}>
+          <Header title={'Select Category'} type={2} />
+        </View>
         {/* Category */}
-        <View style={style.categoryContainer}>
-          <Header title={'Select Category'} color={'#022150'} />
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={style.buttonContainer}>
-            {categories.map(item => (
-              <Category name={item.name} key={item.id} />
-            ))}
-          </ScrollView>
+        <View style={style.categoryHeader}>
+          {isLoadingCategories ? (
+            <Text>Loading....</Text>
+          ) : (
+            <FlatList
+              // 스크롤이 절반에 이르면
+              onEndReachedThreshold={0.5}
+              // 새로운 데이터를 가져와서 기존 데이터에 삽입힌다.
+              onEndReached={() => {
+                setIsLoadingCategories(true);
+                console.log('끝에 도달했습니다');
+                newData = pagination(
+                  categories.categories,
+                  categoryPage,
+                  categoryPageSize,
+                );
+                if (newData.length > 0) {
+                  setCategoryList(prevState => [...prevState, ...newData]);
+                  setCategoryPage(prevState => prevState + 1);
+                }
+                setIsLoadingCategories(false);
+              }}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              data={categoryList}
+              renderItem={({item}) => (
+                <View style={style.tab}>
+                  <Tab
+                    tabId={item.categoryId}
+                    title={item.name}
+                    isInactive={
+                      item.categoryId !== categories.selectedCategoryId
+                    }
+                    onPress={value => dispatch(updateSelectedCategoryId(value))}
+                  />
+                </View>
+              )}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
