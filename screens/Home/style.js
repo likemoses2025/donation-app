@@ -48,6 +48,10 @@ const style = StyleSheet.create({
     marginHorizontal: horizontalScale(24),
     marginBottom: verticalScale(10),
   },
+  donationItemsContainer: {
+    marginHorizontal: horizontalScale(24),
+    marginTop: verticalScale(20),
+  },
 });
 
 export default style;

@@ -17,6 +17,7 @@ import Tab from '../../components/Tab/Tab';
 import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
 import style from './style';
 import {resetDonations} from '../../redux/reducers/Donations';
+import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
 
 const Home = () => {
   const user = useSelector(state => state.user);
@@ -26,8 +27,18 @@ const Home = () => {
 
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
+  const [donationItems, setDonationItems] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const categoryPageSize = 4;
+
+  useEffect(() => {
+    const items = donations.items;
+    const filteredItems = items.filter(value =>
+      value.categoryIds.includes(categories.selectedCategoryId),
+    );
+    console.log('FillteredItems', filteredItems);
+    setDonationItems(filteredItems);
+  }, [categories.selectedCategoryId]);
 
   useEffect(() => {
     setIsLoadingCategories(true);
@@ -120,6 +131,24 @@ const Home = () => {
               )}
             />
           )}
+        </View>
+        <View style={style.donationItemsContainer}>
+          {donationItems.length > 0 &&
+            donationItems.map(value => (
+              <SingleDonationItem
+                onPress={value => console.log(value)}
+                key={value.donationItemId}
+                donationItemId={value.donationItemId}
+                uri={value.image}
+                donationTitle={value.name}
+                price={parseFloat(value.price)}
+                badgeTitle={
+                  categories.categories.filter(
+                    val => val.categoryId === categories.selectedCategoryId,
+                  )[0].name
+                }
+              />
+            ))}
         </View>
       </ScrollView>
     </SafeAreaView>
