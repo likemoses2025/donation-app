@@ -10,24 +10,22 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import style from './style';
 import globalStyles from '../../assets/styles/globalStyle';
 import Header from '../../components/Header/Header';
 import Search from '../../components/Search/Search';
-import Tab from '../../components/Tab/Tab';
-import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
-import {
-  resetDonations,
-  updateSelectedDonationId,
-} from '../../redux/reducers/Donations';
 import SingleDonationItem from '../../components/SingleDonationItem/SingleDonationItem';
+import Tab from '../../components/Tab/Tab';
 import {Routes} from '../../navigation/Routes';
+import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
+import {updateSelectedDonationId} from '../../redux/reducers/Donations';
+import style from './style';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const user = useSelector(state => state.user);
   const categories = useSelector(state => state.categories);
   const donations = useSelector(state => state.donations);
-  const dispatch = useDispatch();
 
   const [categoryPage, setCategoryPage] = useState(1);
   const [categoryList, setCategoryList] = useState([]);
@@ -40,7 +38,6 @@ const Home = ({navigation}) => {
     const filteredItems = items.filter(value =>
       value.categoryIds.includes(categories.selectedCategoryId),
     );
-    console.log('FillteredItems', filteredItems);
     setDonationItems(filteredItems);
   }, [categories.selectedCategoryId]);
 
@@ -138,27 +135,30 @@ const Home = ({navigation}) => {
         </View>
         <View style={style.donationItemsContainer}>
           {donationItems.length > 0 &&
-            donationItems.map(value => (
-              <View key={value.donationItemId} style={style.singleDonationItem}>
-                <SingleDonationItem
-                  onPress={selectedSingleDonationId => {
-                    dispatch(
-                      updateSelectedDonationId(selectedSingleDonationId),
-                    );
-                    navigation.navigate(Routes.SingleDonationItem);
-                  }}
-                  donationItemId={value.donationItemId}
-                  uri={value.image}
-                  donationTitle={value.name}
-                  price={parseFloat(value.price)}
-                  badgeTitle={
-                    categories.categories.filter(
-                      val => val.categoryId === categories.selectedCategoryId,
-                    )[0].name
-                  }
-                />
-              </View>
-            ))}
+            donationItems.map(value => {
+              const categoryInformation = categories.categories.find(
+                val => val.categoryId === categories.selectedCategoryId,
+              );
+              return (
+                <View
+                  key={value.donationItemId}
+                  style={style.singleDonationItem}>
+                  <SingleDonationItem
+                    onPress={selectedDonationId => {
+                      dispatch(updateSelectedDonationId(selectedDonationId));
+                      navigation.navigate(Routes.SingleDonationScreen, {
+                        categoryInformation,
+                      });
+                    }}
+                    donationItemId={value.donationItemId}
+                    uri={value.image}
+                    donationTitle={value.name}
+                    price={parseFloat(value.price)}
+                    badgeTitle={categoryInformation.name}
+                  />
+                </View>
+              );
+            })}
         </View>
       </ScrollView>
     </SafeAreaView>
