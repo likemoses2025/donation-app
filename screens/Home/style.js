@@ -51,6 +51,13 @@ const style = StyleSheet.create({
   donationItemsContainer: {
     marginHorizontal: horizontalScale(24),
     marginTop: verticalScale(20),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  singleDonationItem: {
+    maxWidth: '49%',
+    marginBottom: verticalScale(23),
   },
 });
 
