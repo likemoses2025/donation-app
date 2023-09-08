@@ -6,22 +6,34 @@ import Input from '../../components/Input/Input';
 import globalStyles from '../../assets/styles/globalStyle';
 import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
+import BackButton from '../../components/BackButton/BackButton';
 
-const Login = ({navigation}) => {
+const Registration = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [fullName, setFullName] = useState('');
   console.log(email);
   console.log(password);
 
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
+      <BackButton
+        style={style.backButton}
+        onPress={() => navigation.goBack()}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={style.container}>
         <View style={style.loginContainer}>
           <View style={globalStyles.marginBottom24}>
-            <Header type={1} title={'Welcome Back'} />
+            <Header type={1} title={'Hello and Welcome !'} />
+          </View>
+          <View style={globalStyles.marginBottom24}>
+            <Input
+              placeHolder={'Enter Full Name'}
+              label={'First & Last Name'}
+              onChangeText={value => setEmail(value)}
+            />
           </View>
           <View style={globalStyles.marginBottom24}>
             <Input
@@ -40,21 +52,12 @@ const Login = ({navigation}) => {
             />
           </View>
           <View style={globalStyles.marginBottom24}>
-            <Button title={'Login'} />
+            <Button title={'Registration'} />
           </View>
-          <Pressable
-            style={style.registrationButton}
-            onPress={() => navigation.navigate('Registration')}>
-            <Header
-              color={'#156CF7'}
-              type={3}
-              title={'Dont have an account?'}
-            />
-          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Login;
+export default Registration;

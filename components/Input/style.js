@@ -6,9 +6,6 @@ import {
 } from '../../assets/styles/scaling';
 
 const style = StyleSheet.create({
-  inputContainer: {
-    marginBottom: verticalScale(24),
-  },
   input: {
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(167, 167, 167, 0.5)',

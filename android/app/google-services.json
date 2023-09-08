@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "237834579308",
+    "project_id": "donation-application-fc40c",
+    "storage_bucket": "donation-application-fc40c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237834579308:android:734f98a73fa1ea57d01749",
+        "android_client_info": {
+          "package_name": "com.donation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237834579308-fiam2pbsq27jgrpfg0jie6najra9ca4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5NTjbRMtEMCJ3eALQ8aVR3p3ABUo2oBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237834579308-fiam2pbsq27jgrpfg0jie6najra9ca4e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

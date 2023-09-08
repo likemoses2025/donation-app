@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const Input = props => {
   const [value, setValue] = useState('');
   return (
-    <View style={style.inputContainer}>
+    <View>
       <Text style={style.label}>{props.label}</Text>
       <TextInput
         style={style.input}
