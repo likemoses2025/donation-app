@@ -7,13 +7,15 @@ import globalStyles from '../../assets/styles/globalStyle';
 import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
 import BackButton from '../../components/BackButton/BackButton';
+import {createUser} from '../../api/user';
 
 const Registration = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
-  console.log(email);
-  console.log(password);
+
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
@@ -32,7 +34,7 @@ const Registration = ({navigation}) => {
             <Input
               placeHolder={'Enter Full Name'}
               label={'First & Last Name'}
-              onChangeText={value => setEmail(value)}
+              onChangeText={value => setFullName(value)}
             />
           </View>
           <View style={globalStyles.marginBottom24}>
@@ -51,8 +53,25 @@ const Registration = ({navigation}) => {
               onChangeText={value => setPassword(value)}
             />
           </View>
+          {error.length > 0 && <Text style={style.error}>{error}</Text>}
+          {success.length > 0 && <Text style={style.success}>{success}</Text>}
           <View style={globalStyles.marginBottom24}>
-            <Button title={'Registration'} />
+            <Button
+              isDisabled={
+                fullName.length <= 2 || email.length <= 5 || password.length < 6
+              }
+              title={'Registration'}
+              onPress={async () => {
+                let user = await createUser(fullName, email, password);
+                if (user.error) {
+                  setError(user.error);
+                } else {
+                  setError('');
+                  setSuccess('You have successfully registered !!');
+                  setTimeout(() => navigation.goBack(), 3000);
+                }
+              }}
+            />
           </View>
         </View>
       </ScrollView>

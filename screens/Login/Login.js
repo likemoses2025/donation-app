@@ -6,13 +6,18 @@ import Input from '../../components/Input/Input';
 import globalStyles from '../../assets/styles/globalStyle';
 import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
+import {loginUser} from '../../api/user';
+import {Routes} from '../../navigation/Routes';
+import {useDispatch} from 'react-redux';
+import {resetToInitialState, logIn} from '../../redux/reducers/User';
 
 const Login = ({navigation}) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  console.log(email);
-  console.log(password);
+  // dispatch(resetToInitialState());
 
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
@@ -39,8 +44,24 @@ const Login = ({navigation}) => {
               onChangeText={value => setPassword(value)}
             />
           </View>
+
+          {error.length > 0 && <Text style={style.error}>{error}</Text>}
+
           <View style={globalStyles.marginBottom24}>
-            <Button title={'Login'} />
+            <Button
+              title={'Login'}
+              isDisabled={email.length <= 5 || password.length <= 5}
+              onPress={async () => {
+                let user = await loginUser(email, password);
+                if (user.status === false) {
+                  setError(user.error);
+                } else {
+                  setError('');
+                  dispatch(logIn(user.data));
+                  navigation.navigate(Routes.Home);
+                }
+              }}
+            />
           </View>
           <Pressable
             style={style.registrationButton}

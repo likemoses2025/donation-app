@@ -11,7 +11,6 @@ const style = StyleSheet.create({
     marginHorizontal: horizontalScale(24),
     justifyContent: 'center',
   },
-
   title: {
     fontSize: scaleFontSize(24),
     color: '#022150',
@@ -25,6 +24,18 @@ const style = StyleSheet.create({
   backButton: {
     marginLeft: horizontalScale(14),
     marginTop: verticalScale(7),
+  },
+  success: {
+    fontFamily: 'Inter',
+    fontSize: scaleFontSize(16),
+    color: '#28a745',
+    marginBottom: verticalScale(24),
+  },
+  error: {
+    fontFamily: 'Inter',
+    fontSize: scaleFontSize(16),
+    color: '#FF0000',
+    marginBottom: verticalScale(24),
   },
 });
 

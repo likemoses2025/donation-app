@@ -19,6 +19,8 @@ import {Routes} from '../../navigation/Routes';
 import {updateSelectedCategoryId} from '../../redux/reducers/Categories';
 import {updateSelectedDonationId} from '../../redux/reducers/Donations';
 import style from './style';
+import {resetToInitialState} from '../../redux/reducers/User';
+import {logOut} from '../../api/user';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
@@ -61,6 +63,8 @@ const Home = ({navigation}) => {
     return items.slice(startIndex, endIndex);
   };
 
+  console.log('User', user);
+
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -68,16 +72,23 @@ const Home = ({navigation}) => {
           <View>
             <Text style={style.headerIntroText}>Hello, </Text>
             <View style={style.username}>
-              <Header
-                title={user.firstName + ' ' + user.lastName[0] + '. 👋'}
-              />
+              <Header title={user.displayName + ' 👋'} />
             </View>
           </View>
-          <Image
-            source={{uri: user.profileImage}}
-            style={style.profileImage}
-            resizeMode={'contain'}
-          />
+          <View>
+            <Image
+              source={{uri: user.profileImage}}
+              style={style.profileImage}
+              resizeMode={'contain'}
+            />
+            <Pressable
+              onPress={async () => {
+                dispatch(resetToInitialState());
+                await logOut();
+              }}>
+              <Header type={3} title={'Logout'} color={'#156CF7'} />
+            </Pressable>
+          </View>
         </View>
         <View style={style.searchBox}>
           <Search />
