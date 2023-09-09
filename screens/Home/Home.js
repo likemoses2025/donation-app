@@ -41,6 +41,7 @@ const Home = ({navigation}) => {
       value.categoryIds.includes(categories.selectedCategoryId),
     );
     setDonationItems(filteredItems);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories.selectedCategoryId]);
 
   useEffect(() => {
