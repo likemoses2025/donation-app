@@ -64,8 +64,6 @@ const Home = ({navigation}) => {
     return items.slice(startIndex, endIndex);
   };
 
-  console.log('User', user);
-
   return (
     <SafeAreaView style={[globalStyles.backgroundWhite, globalStyles.flex]}>
       <ScrollView showsVerticalScrollIndicator={false}>

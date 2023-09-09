@@ -8,7 +8,7 @@ import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
 import {loginUser} from '../../api/user';
 import {Routes} from '../../navigation/Routes';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {resetToInitialState, logIn} from '../../redux/reducers/User';
 
 const Login = ({navigation}) => {
