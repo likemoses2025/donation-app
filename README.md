@@ -2,9 +2,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 ## Note
 
-```
-API : Application Programming Interface
-```
+**API** : Application Programming Interface
 
 # Getting Started
 
